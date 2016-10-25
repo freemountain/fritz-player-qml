@@ -1,0 +1,6 @@
+[submodule "dependencies/vlc-qt"]
+	path = dependencies/vlc-qt
+	url = https://github.com/vlc-qt/vlc-qt
+[submodule "dependencies/fritz-backend"]
+	path = dependencies/fritz-backend
+	url = https://github.com/freemountain/fritz-backend

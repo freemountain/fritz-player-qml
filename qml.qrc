@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>src/qml/components/SourceList.qml</file>
+        <file>src/qml/CmdClient.qml</file>
+        <file>src/qml/Drawer.qml</file>
+        <file>src/qml/main.qml</file>
+        <file>src/qml/Model.qml</file>
+        <file>src/qml/VisibleAnimation.qml</file>
+        <file>src/qml/components/SourceMenu.qml</file>
+        <file>src/qml/components/VisibleAnimation.qml</file>
+        <file>src/qml/components/MenuPane.qml</file>
+        <file>src/qml/FlatSourceModel.qml</file>
+        <file>src/qml/components/SourceListView.qml</file>
+    </qresource>
+</RCC>
