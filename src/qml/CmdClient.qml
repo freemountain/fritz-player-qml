@@ -9,6 +9,20 @@ WebSocket {
     signal sources(var data)
     property ListModel flatStreams: ListModel {}
 
+    property Timer timer: Timer {
+        id: timer
+        interval: 1000
+        running: true
+        repeat: true
+        onTriggered: {
+            if(client.status == WebSocket.Open) return;
+            client.active = false;
+            client.active = true;
+            console.log("reconnect")
+
+        }
+    }
+
     onTextMessageReceived: function(data) {
         const msg = JSON.parse(data);
         const topic = msg.topic;
@@ -20,7 +34,13 @@ WebSocket {
 
     onStatusChanged: {
         if(this.status == WebSocket.Connecting) console.log('WS connecting\n');
-        if(this.status == WebSocket.Open) console.log('WS open\n');
+        if(this.status == WebSocket.Open) {
+            timer.running = false;
+            console.log('WS open\n');
+            return;
+        }
+
+        timer.running = true;
         if(this.status == WebSocket.Closing) console.log('WS closing\n');
         if(this.status == WebSocket.Closed) console.log('WS closed\n');
         if(this.status == WebSocket.Error) console.log('WS Error:', this.errorString , '\n');

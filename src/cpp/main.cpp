@@ -26,7 +26,17 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QQuickStyle::setStyle("Material");
 
+    QQmlApplicationEngine engine;
     Backend* backend = new Backend();
+
+    engine.load(QUrl("qrc:/src/qml/main.qml"));
+
+    VlcCommon::setPluginPath(app.applicationDirPath() + "/plugins" );
+    VlcQmlVideoPlayer::registerPlugin();
+    VlcQmlPlayer::registerUserData();
+
+
+    QObject::connect(&app, SIGNAL(aboutToQuit()), backend, SLOT(close()));
 
     qDebug() << "node:" << backend->getCommand("node");
     qDebug() << "backend:" << backend->getBackendPath();
@@ -34,16 +44,11 @@ int main(int argc, char *argv[])
     backend->start();
 
     if (!backend->waitForStarted()) {
-            qDebug() <<"could not start backend";
-           return false;
+           qDebug() <<"Could not start backend";
+           //return false;
     }
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl("qrc:/src/qml/main.qml"));
-    QObject::connect(&app, SIGNAL(aboutToQuit()), backend, SLOT(close()));
-    VlcCommon::setPluginPath(app.applicationDirPath() + "/plugins" );
-    VlcQmlVideoPlayer::registerPlugin();
-    VlcQmlPlayer::registerUserData();
+
 
     return app.exec();
 }
