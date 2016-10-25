@@ -22,6 +22,26 @@ QString Backend::getShell() {
 }
 
 QString Backend::getBundledCommand(QString name) {
+    QString binPath = QFileInfo( QCoreApplication::applicationFilePath() ).absolutePath();
+    QString path = binPath + "/" + name;
+    QFileInfo info = QFileInfo(path);
+
+    if(info.exists() && info.isFile()) return path;
+
+    return NULL;
+}
+
+QString Backend::getSystemCommand(QString name) {
+    QString files[] = {"/bin/", "/usr/bin/", "/usr/local/bin/"};
+
+    for( unsigned int i = 0; i < sizeof(files); i = i + 1 )
+    {
+        QString current = files[i] + name;
+        QFileInfo info = QFileInfo(current);
+        bool isFile = info.exists() && info.isFile();
+        if(isFile) return current;
+    }
+
     return NULL;
 }
 
@@ -34,7 +54,11 @@ QString Backend::getCommand(QString name) {
 
     if(bundledCmd != NULL) return bundledCmd;
 
-    return this->getShellCommand(name);
+    QString shellCmd = this->getShellCommand(name);
+
+    if(shellCmd != NULL) return shellCmd;
+
+    return this->getSystemCommand(name);
 }
 
 QString Backend::getShellCommand(QString name) {

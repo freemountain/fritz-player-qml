@@ -14,6 +14,7 @@ public:
     QString getCommand(QString name);
     QString getShellCommand(QString name);
     QString getBundledCommand(QString name);
+    QString getSystemCommand(QString name);
 
     QString getShell();
     QString getBackendPath();
