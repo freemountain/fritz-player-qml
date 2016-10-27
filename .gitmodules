@@ -4,3 +4,9 @@
 [submodule "dependencies/fritz-backend"]
 	path = dependencies/fritz-backend
 	url = https://github.com/freemountain/fritz-backend
+[submodule "dependencies/SortFilterProxyModel"]
+	path = dependencies/SortFilterProxyModel
+	url = https://github.com/oKcerG/SortFilterProxyModel
+[submodule "dependencies/qsyncable"]
+	path = dependencies/qsyncable
+	url = https://github.com/benlau/qsyncable

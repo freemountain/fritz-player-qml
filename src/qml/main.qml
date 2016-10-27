@@ -3,8 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Controls.Material 2.0
 import QtGraphicalEffects 1.0
 
-import VLCQt 1.0
-
+import VLCQt 1.1
 import "components"
 
 ApplicationWindow {
@@ -18,20 +17,10 @@ ApplicationWindow {
 
     CmdClient {
         id: client
-        onSources: function(sources) {
-            srcModel.clear();
-            sources.forEach(function(src) {
-                srcModel.append(src);
-            });
-        }
 
-        onPlayer: function(player) {
-            vidwidget.url = player.url
+        onPlayerChanged: {
+            vidPlayer.url = player.url
         }
-    }
-
-    Model {
-        id: srcModel
     }
 
     Rectangle {
@@ -45,7 +34,6 @@ ApplicationWindow {
             hoverEnabled: true
             onEntered: menuPane.opened = false
         }
-
     }
 
     Rectangle {
@@ -68,43 +56,40 @@ ApplicationWindow {
         height: window.height
 
         Rectangle {
+            clip: true
+
             anchors.fill: parent
             anchors.leftMargin: 10
             anchors.rightMargin: 10
 
-            clip: true
-
             SourceListView {
                 width: menuPane.childrenRect.width
                 height: window.height
-                model: client.flatStreams
+                sources: client.sources
                 onClicked: function(source) {
-                    vidwidget.url = source.url
-                    console.log(source.url);
+                    vidPlayer.url = source.url
                 }
             }
         }
-
-
-
     }
 
-    VlcVideoPlayer {
-        z: 100
-        id: vidwidget
-        objectName: "player"
+    VlcPlayer {
+        id: vidPlayer
 
-        contentsSize.height: 100
-        contentsSize.width: 100
-        contentsScale: 1
+        onStateChanged: function() {
+            if(vidPlayer.state < 6) return;
+
+            vidPlayer.stop();
+            vidPlayer.play();
+        }
+    }
+
+    VlcVideoOutput {
+        z: 100
+        id: vidOutput
+        source: vidPlayer
         anchors.fill: parent
         anchors.top: parent.top
         anchors.left: parent.left
-        // url: "rtsp://192.168.0.17:554/?freq=122&bw=8&msys=dvbc&mtype=64qam&sr=6900&specinv=0&pids=0,16,17,18,20,153,4471,109,4472"
-        url: "http://video.blendertestbuilds.de/download.blender.org/peach/trailer_400p.ogg"
-        function setUrl(msg) {
-            console.log("Got message:", msg)
-            return "some return value"
-        }
     }
 }
