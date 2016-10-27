@@ -1,3 +1,5 @@
+#!/bin/bash
+
 PROJECT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../"
 QT_PATH="$(dirname $(which qmake))/.."
 
