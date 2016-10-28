@@ -1,2 +1,4 @@
 build-deps
 *.pro.user
+*.qmake.stash
+Makefile
