@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     QQuickStyle::setStyle("Material");
 
     QQmlApplicationEngine engine;
-    Backend* backend = new Backend();
+    Backend backend;
 
     engine.load(QUrl("qrc:/src/qml/main.qml"));
 
@@ -43,15 +43,15 @@ int main(int argc, char *argv[])
     VlcQmlPlayer::registerUserData();
     VlcQmlVideoOutput::registerUserData();
 
-    QObject::connect(&app, SIGNAL(aboutToQuit()), backend, SLOT(close()));
+    QObject::connect(&app, SIGNAL(aboutToQuit()), &backend, SLOT(close()));
 
-    qDebug() << "node:" << backend->getCommand("node");
-    qDebug() << "backend:" << backend->getBackendPath();
+    qDebug() << "node:" << backend.getCommand("node");
+    qDebug() << "backend:" << backend.getBackendPath();
     qDebug() << "libvlcArg:" << VlcCommon::args();
 
-    backend->start();
+    backend.start();
 
-    if (!backend->waitForStarted()) {
+    if (!backend.waitForStarted()) {
            qDebug() <<"Could not start backend";
     }
 

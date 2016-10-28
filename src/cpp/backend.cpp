@@ -7,11 +7,11 @@
 Backend::Backend(QProcessEnvironment env, QObject *parent) : QObject(parent)
 {
     this->env = env;
-    this->proc = new QProcess();
-    this->proc->setProcessChannelMode(QProcess::ForwardedChannels);
+    //this->proc = QProcess();
+    this->proc.setProcessChannelMode(QProcess::ForwardedChannels);
     this->running = false;
 
-    connect(this->proc, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), [=](int exitCode) {
+    connect(&this->proc, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), [=](int exitCode) {
         qDebug() << "backend stopped " << exitCode;
         this->running = false;
     });
@@ -89,11 +89,11 @@ QString Backend::getBackendPath() {
 }
 
 void Backend::start() {
-    this->proc->start(this->getCommand("node"), QStringList() << this->getBackendPath());
+    this->proc.start(this->getCommand("node"), QStringList() << this->getBackendPath());
 }
 
 bool Backend::waitForStarted() {
-    bool started = this->proc->waitForStarted();
+    bool started = this->proc.waitForStarted();
     if(!started) return false;
 
     return true;
@@ -102,12 +102,12 @@ bool Backend::waitForStarted() {
 void Backend::close() {
     QTimer *timer = new QTimer(this);
 
-    this->proc->terminate();
+    this->proc.terminate();
 
     connect(timer, SIGNAL(timeout()), this, SLOT(kill()));
     timer->start(100);
 }
 
 void Backend::kill() {
-    this->proc->kill();
+    this->proc.kill();
 }

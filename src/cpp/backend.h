@@ -23,7 +23,7 @@ public:
     bool waitForStarted();
 private:
     QProcessEnvironment env;
-    QProcess *proc;
+    QProcess proc;
     bool running;
 
 signals:
