@@ -56,7 +56,6 @@ Item {
                 return makeElement(source.name, stream);
             });
 
-            console.log('section', JSON.stringify(makeSection(source.name)));
             return [ makeSection(source.name) ].concat(elements)
         }).reduce(function(prev, current) {
             return prev.concat(current);
