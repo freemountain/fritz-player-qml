@@ -4,5 +4,7 @@
         <file>src/qml/main.qml</file>
         <file>src/qml/components/MenuPane.qml</file>
         <file>src/qml/components/SourceListView.qml</file>
+        <file>src/qml/components/FontAwesome.qml</file>
+        <file>resources/fontawesome-webfont.ttf</file>
     </qresource>
 </RCC>

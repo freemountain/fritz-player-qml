@@ -12,6 +12,8 @@ Item {
     property var sources
     signal clicked(var source)
 
+    FontLoader { id: awesome; source: "qrc:/resources/fontawesome-webfont.ttf" }
+
     QtObject {
         id: internal
         property var streams:[]
@@ -117,19 +119,38 @@ Item {
         id: sectionDelegate
 
         Rectangle {
+            id: rect
             height: 20
             width: parent.width
             visible: true
+
             property bool isHidden: internal.hidden.indexOf(section) !== -1
 
-            Label {
+            Row {
                 anchors.verticalCenter : parent.verticalCenter
 
-                font.pixelSize: 10
-                text: section
-                font.bold: true
-                color: Material.accent
+                Label {
+                    anchors.verticalCenter : parent.verticalCenter
+                    text: isHidden ?  "\uf067" : "\uf068"
+                    font.family: awesome.name
+                    font.pixelSize: 10
+                }
+                Rectangle {
+                    height: 20
+                    width: 10
+                }
+
+                Label {
+                    anchors.verticalCenter : parent.verticalCenter
+
+                    font.pixelSize: 10
+                    text: section
+                    font.bold: true
+                    color: Material.accent
+                }
             }
+
+
 
             MouseArea {
                     anchors.fill: parent
