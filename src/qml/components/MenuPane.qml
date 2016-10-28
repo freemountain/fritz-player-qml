@@ -13,14 +13,18 @@ Item {
         id: pane
         anchors.fill: parent
         z: item.z
-
+        background: Rectangle {
+            color: "transparent"
+        }
 
         Rectangle {
             anchors.fill: parent
             anchors.margins: -12
+            opacity: 0.65
             Item {
                 id: placeholder
                 anchors.fill: parent
+
             }
         }
     }

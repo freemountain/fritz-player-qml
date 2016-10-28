@@ -61,7 +61,7 @@ ApplicationWindow {
             anchors.fill: parent
             anchors.leftMargin: 10
             anchors.rightMargin: 10
-
+            color: "transparent"
             SourceListView {
                 width: menuPane.childrenRect.width
                 height: window.height

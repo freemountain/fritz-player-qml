@@ -85,6 +85,7 @@ Item {
             width: parent.width
             visible: model.section !== true
             property bool hovered: false
+            color: "transparent"
 
             states: [
                 State { when: hovered;
@@ -111,6 +112,9 @@ Item {
                 font.pixelSize: 14
                 font.bold: internal.active === id
                 text: title
+                background: Rectangle {
+                    color: "transparent"
+                }
             }
         }
     }
@@ -123,6 +127,7 @@ Item {
             height: 20
             width: parent.width
             visible: true
+            color: "transparent"
 
             property bool isHidden: internal.hidden.indexOf(section) !== -1
 
@@ -134,10 +139,13 @@ Item {
                     text: isHidden ?  "\uf067" : "\uf068"
                     font.family: awesome.name
                     font.pixelSize: 10
+                    color: Material.accent
+                    font.bold: true
                 }
                 Rectangle {
                     height: 20
                     width: 10
+                    color: "transparent"
                 }
 
                 Label {
@@ -147,6 +155,9 @@ Item {
                     text: section
                     font.bold: true
                     color: Material.accent
+                    background: Rectangle {
+                        color: "transparent"
+                    }
                 }
             }
 
